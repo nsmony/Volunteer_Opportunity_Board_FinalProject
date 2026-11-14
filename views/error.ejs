@@ -1,0 +1,10 @@
+<%- include('partials/header', { title: 'Error' }) %>
+<section class="status-page">
+  <p class="status-code">Oops</p>
+  <h1>Something went wrong</h1>
+  <p class="muted">
+    <%= (typeof message !== 'undefined' && message) ? message : 'Please try again later.' %>
+  </p>
+  <a class="btn btn-primary" href="/opportunities">Back to Browse</a>
+</section>
+<%- include('partials/footer') %>

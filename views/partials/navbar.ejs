@@ -1,0 +1,29 @@
+<% const path = (typeof currentPath !== 'undefined') ? currentPath : ''; %>
+<header class="navbar">
+  <div class="nav-inner">
+    <div class="nav-left">
+      <a class="brand" href="/opportunities">VolunteerBoard</a>
+      <nav class="nav-links" aria-label="Main">
+        <a class="nav-link <%= (path === '/opportunities' || /^\/opportunities\/\d+/.test(path)) ? 'active' : '' %>"
+           href="/opportunities">Browse</a>
+        <% if (user) { %>
+          <a class="nav-link <%= path === '/my-opportunities' ? 'active' : '' %>"
+             href="/my-opportunities">My Opportunities</a>
+        <% } %>
+      </nav>
+    </div>
+
+    <div class="nav-actions">
+      <a class="btn btn-primary" href="/opportunities/new">+ Post Opportunity</a>
+      <% if (user) { %>
+        <span class="nav-user"><%= user.username %></span>
+        <form method="POST" action="/logout" class="inline-form">
+          <button type="submit" class="btn-link">Logout</button>
+        </form>
+      <% } else { %>
+        <a class="nav-link" href="/login">Login</a>
+        <a class="btn btn-outline" href="/register">Register</a>
+      <% } %>
+    </div>
+  </div>
+</header>

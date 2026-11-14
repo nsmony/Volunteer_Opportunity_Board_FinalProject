@@ -1,0 +1,33 @@
+<%# Shows success / info / error messages. Included automatically by header.ejs. %>
+<% if (typeof success !== 'undefined' && success) { %>
+  <div class="alert alert-success" role="status">
+    <span class="alert-icon" aria-hidden="true">&#10003;</span>
+    <div class="alert-text"><%= success %></div>
+    <button type="button" class="alert-close" aria-label="Dismiss message" onclick="this.parentElement.remove()">&times;</button>
+  </div>
+<% } %>
+
+<% if (typeof info !== 'undefined' && info) { %>
+  <div class="alert alert-info" role="status">
+    <span class="alert-icon" aria-hidden="true">i</span>
+    <div class="alert-text"><%= info %></div>
+    <button type="button" class="alert-close" aria-label="Dismiss message" onclick="this.parentElement.remove()">&times;</button>
+  </div>
+<% } %>
+
+<% if (typeof errors !== 'undefined' && errors && errors.length) { %>
+  <div class="alert alert-error" role="alert">
+    <span class="alert-icon" aria-hidden="true">!</span>
+    <div class="alert-text">
+      <% if (errors.length === 1) { %>
+        <%= errors[0] %>
+      <% } else { %>
+        <strong>Please fix the following:</strong>
+        <ul>
+          <% errors.forEach(function (e) { %><li><%= e %></li><% }) %>
+        </ul>
+      <% } %>
+    </div>
+    <button type="button" class="alert-close" aria-label="Dismiss message" onclick="this.parentElement.remove()">&times;</button>
+  </div>
+<% } %>
