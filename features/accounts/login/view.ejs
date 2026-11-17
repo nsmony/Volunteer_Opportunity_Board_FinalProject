@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Log in | Volunteer Opportunity Board</title>
+  <link rel="stylesheet" href="/css/base.css">
+</head>
+<body>
+  <main>
+    <h1>Log in</h1>
+    <% if (signedOut) { %>
+      <p role="status">You have been logged out.</p>
+    <% } %>
+    <% if (accountNotice) { %>
+      <p role="status"><%= accountNotice %></p>
+    <% } %>
+    <% if (error) { %>
+      <p role="alert"><%= error %></p>
+    <% } %>
+    <form method="post" action="/login">
+      <input type="hidden" name="returnTo" value="<%= returnTo %>">
+      <div>
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email"
+          maxlength="254" required>
+      </div>
+      <div>
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password"
+          autocomplete="current-password" required>
+      </div>
+      <button type="submit">Log in</button>
+    </form>
+    <p>New here? <a href="/register">Create an account</a></p>
+  </main>
+</body>
+</html>
