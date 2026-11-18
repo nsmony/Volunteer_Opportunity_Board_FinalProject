@@ -1,0 +1,26 @@
+<%- include('../partials/header') %>
+<link rel="stylesheet" href="/css/browse.css">
+
+<%- include('../partials/searchForm') %>
+
+<% if (opportunities.length === 0) { %>
+  <section class="empty-state">
+    <% if (isFiltered) { %>
+      <h2>No opportunities found</h2>
+      <p class="muted">Nothing matches your search. Try different keywords or another category.</p>
+      <a class="btn btn-primary" href="/opportunities">Clear search</a>
+    <% } else { %>
+      <h2>No opportunities yet</h2>
+      <p class="muted">Be the first to post one for your community.</p>
+      <a class="btn btn-primary" href="/opportunities/new">+ Post Opportunity</a>
+    <% } %>
+  </section>
+<% } else { %>
+  <section class="card-grid" aria-label="Volunteer opportunities">
+    <% opportunities.forEach(function (opp) { %>
+      <%- include('../partials/opportunityCard', { opp: opp }) %>
+    <% }) %>
+  </section>
+<% } %>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,30 @@
+<%# Keyword + category search. Needs: categories (array), search ({ q, category }). GET, so results are bookmarkable. %>
+<form class="search-bar" method="GET" action="/opportunities" role="search">
+  <div class="form-group search-keywords">
+    <label for="q">
+      <svg class="icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      Search Keywords
+    </label>
+    <input class="form-control" type="search" id="q" name="q" maxlength="100"
+           value="<%= search.q %>" placeholder="e.g. Garden cleanup, Reading tutor, Food pantry...">
+  </div>
+
+  <div class="form-group search-category">
+    <label for="category">
+      <svg class="icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Category
+    </label>
+    <select class="form-control" id="category" name="category">
+      <option value="">All Categories</option>
+      <% categories.forEach(function (c) { %>
+        <option value="<%= c.id %>" <%= search.category === c.id ? 'selected' : '' %>><%= c.name %></option>
+      <% }) %>
+    </select>
+  </div>
+
+  <button type="submit" class="btn btn-primary">
+    <svg class="icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M7 12h10M10 17h4"/></svg>
+    Search
+  </button>
+  <a class="btn btn-secondary" href="/opportunities">Clear</a>
+</form>

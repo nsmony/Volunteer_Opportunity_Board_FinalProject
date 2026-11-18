@@ -1,0 +1,44 @@
+<%- include('../partials/header') %>
+<link rel="stylesheet" href="/css/browse.css">
+<%
+  const isOpen = opportunity.status === 'open';
+  const img = opportunity.image_filename ? '/uploads/' + opportunity.image_filename : '/images/placeholder.svg';
+  const posted = new Date(opportunity.created_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+%>
+<a class="back-link" href="/opportunities">&larr; Back to Browse</a>
+
+<article class="detail">
+  <div class="detail-image">
+    <img src="<%= img %>" alt="" onerror="this.onerror=null;this.src='/images/placeholder.svg'">
+    <span class="category-tag"><%= opportunity.category_name %></span>
+    <span class="status-pill <%= isOpen ? 'is-open' : 'is-closed' %>"><%= isOpen ? 'Open' : 'Closed' %></span>
+  </div>
+
+  <div class="detail-body">
+    <h1><%= opportunity.title %></h1>
+
+    <ul class="detail-meta">
+      <li>
+        <svg class="icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 1114 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        <%= opportunity.location %>
+      </li>
+      <li>
+        <svg class="icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        Posted <%= posted %>
+      </li>
+      <li>
+        <svg class="icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        By <%= opportunity.posted_by %>
+      </li>
+    </ul>
+
+    <h2>About this opportunity</h2>
+    <p class="detail-description"><%= opportunity.description %></p>
+
+    <% if (!isOpen) { %>
+      <p class="detail-closed-note">This opportunity is closed and no longer taking volunteers.</p>
+    <% } %>
+  </div>
+</article>
+
+<%- include('../partials/footer') %>
