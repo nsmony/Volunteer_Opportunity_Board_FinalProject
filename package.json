@@ -4,7 +4,8 @@
   "description": "INFO653 final project: Volunteer Opportunity Board (Express + EJS + MySQL)",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "create-demo-user": "node scripts/createDemoUser.js"
   },
   "license": "ISC",
   "dependencies": {
