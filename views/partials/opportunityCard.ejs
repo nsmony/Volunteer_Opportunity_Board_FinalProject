@@ -1,0 +1,23 @@
+<%# Locals: item (opportunity row), showActions (boolean) %>
+<article class="card">
+  <img class="card-img"
+       src="<%= item.image_filename ? '/uploads/' + item.image_filename : '/images/placeholder.svg' %>"
+       alt="<%= item.image_filename ? item.title : 'No image provided' %>">
+  <div class="card-body">
+    <span class="badge badge-<%= item.status %>"><%= item.status === 'open' ? 'Open' : 'Closed' %></span>
+    <span class="category"><%= item.category_name %></span>
+    <h3><a href="/opportunities/<%= item.id %>"><%= item.title %></a></h3>
+    <p class="location"><%= item.location %></p>
+    <p><%= item.description.length > 120 ? item.description.slice(0, 120) + '...' : item.description %></p>
+
+    <% if (showActions) { %>
+      <div class="card-actions">
+        <a class="btn" href="/opportunities/<%= item.id %>/edit">Edit</a>
+        <form action="/opportunities/<%= item.id %>/delete" method="POST" class="inline"
+              onsubmit="return confirm('Delete this opportunity? This cannot be undone.')">
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+    <% } %>
+  </div>
+</article>

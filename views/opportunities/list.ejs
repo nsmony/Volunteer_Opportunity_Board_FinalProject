@@ -1,0 +1,18 @@
+<%- include('../partials/header') %>
+<h1>Volunteer Opportunities</h1>
+
+<%- include('../partials/searchForm', { q: q, category: category, categories: categories }) %>
+
+<% if (opportunities.length === 0) { %>
+  <p class="empty">
+    <% if (q || category) { %>No opportunities match your search. Try a different keyword or category.
+    <% } else { %>No opportunities have been posted yet.<% } %>
+  </p>
+<% } else { %>
+  <div class="card-grid">
+    <% opportunities.forEach(function (item) { %>
+      <%- include('../partials/opportunityCard', { item: item, showActions: false }) %>
+    <% }) %>
+  </div>
+<% } %>
+<%- include('../partials/footer') %>

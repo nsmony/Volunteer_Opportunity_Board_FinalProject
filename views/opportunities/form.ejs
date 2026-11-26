@@ -1,0 +1,46 @@
+<%# Shared by create (M3) and edit (M4). Locals: heading, submitLabel, formAction,
+    formErrors, categories, opportunity %>
+<%- include('../partials/header') %>
+<h1><%= heading %></h1>
+
+<% if (formErrors.length) { %>
+  <ul class="form-errors" role="alert">
+    <% formErrors.forEach(function (msg) { %><li><%= msg %></li><% }) %>
+  </ul>
+<% } %>
+
+<form action="<%= formAction %>" method="POST" enctype="multipart/form-data" novalidate>
+  <label for="title">Title</label>
+  <input id="title" name="title" type="text" maxlength="120" value="<%= opportunity.title %>" required>
+
+  <label for="category_id">Category</label>
+  <select id="category_id" name="category_id" required>
+    <option value="">Choose a category</option>
+    <% categories.forEach(function (c) { %>
+      <option value="<%= c.id %>" <%= Number(opportunity.category_id) === c.id ? 'selected' : '' %>><%= c.name %></option>
+    <% }) %>
+  </select>
+
+  <label for="location">Location</label>
+  <input id="location" name="location" type="text" maxlength="150" value="<%= opportunity.location %>" required>
+
+  <label for="description">Description</label>
+  <textarea id="description" name="description" rows="6" required><%= opportunity.description %></textarea>
+
+  <label for="status">Status</label>
+  <select id="status" name="status">
+    <option value="open" <%= opportunity.status !== 'closed' ? 'selected' : '' %>>Open</option>
+    <option value="closed" <%= opportunity.status === 'closed' ? 'selected' : '' %>>Closed</option>
+  </select>
+
+  <label for="image">Image (JPEG or PNG, max 2 MB)</label>
+  <% if (opportunity.image_filename) { %>
+    <p>Current image: <img src="/uploads/<%= opportunity.image_filename %>" alt="Current image" width="120"><br>
+       <small>Choose a new file only if you want to replace it.</small></p>
+  <% } %>
+  <input id="image" name="image" type="file" accept="image/jpeg,image/png">
+
+  <button type="submit" class="btn"><%= submitLabel %></button>
+  <a href="<%= opportunity.id ? '/opportunities/' + opportunity.id : '/opportunities' %>">Cancel</a>
+</form>
+<%- include('../partials/footer') %>

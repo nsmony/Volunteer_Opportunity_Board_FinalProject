@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "create-demo-user": "node scripts/createDemoUser.js"
+    "create-demo-user": "node scripts/createDemoUser.js",
+    "dev": "nodemon app.js"
   },
   "license": "ISC",
   "dependencies": {

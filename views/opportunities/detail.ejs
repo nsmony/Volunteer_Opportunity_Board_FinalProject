@@ -1,0 +1,25 @@
+<%- include('../partials/header') %>
+<article class="detail">
+  <img class="detail-img"
+       src="<%= opportunity.image_filename ? '/uploads/' + opportunity.image_filename : '/images/placeholder.svg' %>"
+       alt="<%= opportunity.image_filename ? opportunity.title : 'No image provided' %>">
+
+  <span class="badge badge-<%= opportunity.status %>"><%= opportunity.status === 'open' ? 'Open' : 'Closed' %></span>
+  <span class="category"><%= opportunity.category_name %></span>
+  <h1><%= opportunity.title %></h1>
+  <p class="location"><strong>Location:</strong> <%= opportunity.location %></p>
+  <p class="meta">Posted by <%= opportunity.username %> on <%= new Date(opportunity.created_at).toLocaleDateString() %></p>
+  <p class="description"><%= opportunity.description %></p>
+
+  <% if (isOwner) { %>
+    <div class="card-actions">
+      <a class="btn" href="/opportunities/<%= opportunity.id %>/edit">Edit</a>
+      <form action="/opportunities/<%= opportunity.id %>/delete" method="POST" class="inline"
+            onsubmit="return confirm('Delete this opportunity? This cannot be undone.')">
+        <button type="submit" class="btn btn-danger">Delete</button>
+      </form>
+    </div>
+  <% } %>
+  <p><a href="/opportunities">&larr; Back to all opportunities</a></p>
+</article>
+<%- include('../partials/footer') %>

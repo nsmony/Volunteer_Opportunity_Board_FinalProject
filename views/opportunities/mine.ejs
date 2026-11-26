@@ -1,0 +1,14 @@
+<%- include('../partials/header') %>
+<h1>My Opportunities</h1>
+<p><a class="btn" href="/opportunities/new">+ Post a new opportunity</a></p>
+
+<% if (opportunities.length === 0) { %>
+  <p class="empty">You have not posted any opportunities yet.</p>
+<% } else { %>
+  <div class="card-grid">
+    <% opportunities.forEach(function (item) { %>
+      <%- include('../partials/opportunityCard', { item: item, showActions: true }) %>
+    <% }) %>
+  </div>
+<% } %>
+<%- include('../partials/footer') %>
