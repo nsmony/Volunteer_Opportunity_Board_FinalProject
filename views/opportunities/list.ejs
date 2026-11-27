@@ -1,18 +1,26 @@
 <%- include('../partials/header') %>
-<h1>Volunteer Opportunities</h1>
+<link rel="stylesheet" href="/css/browse.css">
 
-<%- include('../partials/searchForm', { q: q, category: category, categories: categories }) %>
+<%- include('../partials/searchForm') %>
 
 <% if (opportunities.length === 0) { %>
-  <p class="empty">
-    <% if (q || category) { %>No opportunities match your search. Try a different keyword or category.
-    <% } else { %>No opportunities have been posted yet.<% } %>
-  </p>
+  <section class="empty-state">
+    <% if (isFiltered) { %>
+      <h2>No opportunities found</h2>
+      <p class="muted">Nothing matches your search. Try different keywords or another category.</p>
+      <a class="btn btn-primary" href="/opportunities">Clear search</a>
+    <% } else { %>
+      <h2>No opportunities yet</h2>
+      <p class="muted">Be the first to post one for your community.</p>
+      <a class="btn btn-primary" href="/opportunities/new">+ Post Opportunity</a>
+    <% } %>
+  </section>
 <% } else { %>
-  <div class="card-grid">
-    <% opportunities.forEach(function (item) { %>
-      <%- include('../partials/opportunityCard', { item: item, showActions: false }) %>
+  <section class="card-grid" aria-label="Volunteer opportunities">
+    <% opportunities.forEach(function (opp) { %>
+      <%- include('../partials/opportunityCard', { opp: opp }) %>
     <% }) %>
-  </div>
+  </section>
 <% } %>
+
 <%- include('../partials/footer') %>

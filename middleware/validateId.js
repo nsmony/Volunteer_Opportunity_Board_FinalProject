@@ -1,9 +1,17 @@
-// Makes sure :id is a positive whole number, otherwise the page is a 404.
+// Checks that :id in the URL is a positive whole number.
+// Anything else (abc, 0, -5, 1.5, huge numbers) gets the 404 page, and the
+// database is never queried. On success the number is stored in req.id.
 module.exports = (req, res, next) => {
-  const id = Number(req.params.id);
-  if (!Number.isInteger(id) || id < 1) {
-    return next(Object.assign(new Error('Not found'), { status: 404 }));
+  const raw = req.params.id;
+  const valid = /^[1-9]\d*$/.test(raw) && Number(raw) <= 4294967295; // INT UNSIGNED max
+
+  if (!valid) {
+    return res.status(404).render('404', {
+      title: 'Not found',
+      message: 'That opportunity does not exist, or it was removed.'
+    });
   }
-  req.params.id = String(id);
+
+  req.id = Number(raw);
   next();
 };

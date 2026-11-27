@@ -1,23 +1,30 @@
-<%# Locals: item (opportunity row), showActions (boolean) %>
-<article class="card">
-  <img class="card-img"
-       src="<%= item.image_filename ? '/uploads/' + item.image_filename : '/images/placeholder.svg' %>"
-       alt="<%= item.image_filename ? item.title : 'No image provided' %>">
-  <div class="card-body">
-    <span class="badge badge-<%= item.status %>"><%= item.status === 'open' ? 'Open' : 'Closed' %></span>
-    <span class="category"><%= item.category_name %></span>
-    <h3><a href="/opportunities/<%= item.id %>"><%= item.title %></a></h3>
-    <p class="location"><%= item.location %></p>
-    <p><%= item.description.length > 120 ? item.description.slice(0, 120) + '...' : item.description %></p>
+<%# One card in the browse grid. Needs: opp (a row from the list query). %>
+<%
+  const isOpen = opp.status === 'open';
+  const img = opp.image_filename ? '/uploads/' + opp.image_filename : '/images/placeholder.svg';
+  const posted = new Date(opp.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+%>
+<article class="card opp-card">
+  <div class="card-image">
+    <img src="<%= img %>" alt="" loading="lazy" onerror="this.onerror=null;this.src='/images/placeholder.svg'">
+    <span class="category-tag"><%= opp.category_name %></span>
+    <span class="status-pill <%= isOpen ? 'is-open' : 'is-closed' %>"><%= isOpen ? 'Open' : 'Closed' %></span>
+  </div>
 
-    <% if (showActions) { %>
-      <div class="card-actions">
-        <a class="btn" href="/opportunities/<%= item.id %>/edit">Edit</a>
-        <form action="/opportunities/<%= item.id %>/delete" method="POST" class="inline"
-              onsubmit="return confirm('Delete this opportunity? This cannot be undone.')">
-          <button type="submit" class="btn btn-danger">Delete</button>
-        </form>
-      </div>
-    <% } %>
+  <div class="card-body">
+    <p class="card-location">
+      <svg class="icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 1114 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+      <%= opp.location %>
+    </p>
+    <h3 class="card-title"><a href="/opportunities/<%= opp.id %>"><%= opp.title %></a></h3>
+    <p class="card-text"><%= opp.description %></p>
+  </div>
+
+  <div class="card-footer opp-card-footer">
+    <span class="card-note">
+      <svg class="icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+      Posted <%= posted %>
+    </span>
+    <a class="card-link" href="/opportunities/<%= opp.id %>"><%= isOpen ? 'View Details' : 'View Summary' %> &rarr;</a>
   </div>
 </article>
